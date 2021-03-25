@@ -1,17 +1,11 @@
 import sys
 
 
-def reverse(string: str) -> str:
-    for index, char in enumerate(string):
-        if char.isupper():
-            char = string[index].lower()
-        else:
-            char = string[index].upper()
-    return string[::-1]
-
-    return string[::-1]
+def reverse(string: str):
+    string = string.swapcase()
+    print(string[::-1], end=" ")
 
 
 if __name__ == '__main__':
-    for i in range(1, len(sys.argv)):
-        print(reverse(sys.argv[i]), end=" ")
+    for s in reversed(sys.argv[1:]):
+        reverse(s)
