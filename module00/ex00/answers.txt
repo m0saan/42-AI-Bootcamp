@@ -1,4 +1,5 @@
 1. pip list
-2. pip list
-3. pip show numpy
-4.
+2. pip show <package_name>
+3. python -m pip show --verbose <package_name>
+4. python -m pip search <query>
+5. python -m pip freeze -r requirement.txt
