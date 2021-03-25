@@ -1,0 +1,4 @@
+1. pip list
+2. pip list
+3. pip show numpy
+4.
