@@ -23,3 +23,12 @@ class Stark(GotCharacter):
         """changes the value of is_alive to False"""
 
         self.is_alive = False
+
+
+class Lannister(GotCharacter):
+    """A class representing the Lannister family. House Lannister of Casterly Rock."""
+
+    def __init__(self, first_name=None, is_alive=True):
+        super(Lannister, self).__init__(first_name=first_name, is_alive=is_alive)
+        self.family_name = "Lannister"
+        self.house_words = "Hear Me Roar!"
