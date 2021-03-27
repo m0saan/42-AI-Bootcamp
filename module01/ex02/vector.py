@@ -68,13 +68,3 @@ class Vector:
 
     def __rmul__(self, other):
         return self * other
-
-
-v1 = Vector([0.0, 1.0, 2.0, 3.0])
-v2 = Vector(3)
-v3 = Vector(10, 16)
-
-
-print(v1)
-print(v2)
-print(v3)
