@@ -1,3 +1,5 @@
+from module01.ex02 import vector
+
 class Matrix:
     """ This is the class representation of a Matrix which is a two-dimensional collection of numbers."""
 
@@ -18,6 +20,10 @@ class Matrix:
 
     def __repr__(self):
         return '{self.__class__.__name__}(data={self.data}, size={self.shape})'.format(self=self)
+
+    def __mul__(self, other: vector):
+        """ Defining the multiplication between a matrix and a  vector."""
+        # data = [zip(other.)]
 
 
 m = Matrix((3, 3))
