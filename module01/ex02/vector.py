@@ -6,62 +6,75 @@ class Vector:
 
     def __init__(self, p1, p2=0):
         if isinstance(p1, list):
-            self.values = p1
-            self.size = len(p1)
+            self.__values = p1
+            self.__size = len(p1)
         elif isinstance(p1, int) and p2 == 0:
-            self.values = [float(v) for v in range(0, p1)]
-            self.size = len(self.values)
+            self.__values = [float(v) for v in range(0, p1)]
+            self.__size = len(self.__values)
         elif isinstance(p1, int) and p2 != 0:
-            self.values = [float(v) for v in range(p1, p2)]
-            self.size = len(self.values)
+            self.__values = [float(v) for v in range(p1, p2)]
+            self.__size = len(self.__values)
         else:
             print("No such constructor")
             return
 
+    @property
+    def values(self):
+        return self.__values
+
+    @values.setter
+    def values(self, v):
+        if not v:
+            raise ValueError("List cannot be empty.")
+
     def __str__(self):
-        return f"(Vector {self.values})"
+        return f"(Vector {self.__values})"
 
     def __repr__(self):
         return '{self.__class__.__name__}(vales={self.values}, size={self.size})'.format(self=self)
 
     def __add__(self, other):
+        values = []
         if isinstance(self, type(other)):
-            self.values = list(map(add, self.values, other.values))
+            values = list(map(add, self.__values, other.__values))
         else:
-            for i, v in enumerate(self.values):
-                self.values[i] = v + other
-        return self
+            for i, v in enumerate(self.__values):
+                values.append(v + other)
+        return Vector(values)
 
     def __radd__(self, other):
-        self + other
-        return self
+        return self + other
 
     def __sub__(self, other):
+        values = []
         if isinstance(self, type(other)):
-            self.values = list(map(sub, self.values, other.values))
+            values = list(map(sub, self.__values, other.__values))
         else:
-            for i, v in enumerate(self.values):
-                self.values[i] = v - other
-        return self
+            for i, v in enumerate(self.__values):
+                values.append(v - other)
+        return Vector(values)
 
     def __rsub__(self, other):
-        self + other
-        return self
+        return self - other
 
     def __mul__(self, other):
+        values = []
         if isinstance(self, type(other)):
-            self.values = list(map(mul, self.values, other.values))
+            values = list(map(mul, self.__values, other.__values))
         else:
-            for i, v in enumerate(self.values):
-                self.values[i] = v * other
-        return self
+            for i, v in enumerate(self.__values):
+                values.append(v * other)
+        return Vector(values)
 
     def __rmul__(self, other):
-        self + other
-        return self
+        return self * other
 
 
 v1 = Vector([0.0, 1.0, 2.0, 3.0])
-v2 = v1 * 5
+v2 = Vector(3)
+v3 = Vector(10, 16)
+
+
+print(v1)
 print(v2)
-# (Vector [0.0, 5.0, 10.0, 15.0])
+print(v3)
