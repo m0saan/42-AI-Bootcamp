@@ -14,7 +14,6 @@ def operations(n1: int, n2: int) -> str:
     else:
         quotient = n1 / n2
         remainder = n1 % n2
-
     return """    Sum:         {}
     Difference:  {}
     Product:     {}
@@ -29,7 +28,7 @@ if __name__ == '__main__':
         print(strHelp)
     elif len(sys.argv) > 3:
         print("InputError: too many arguments")
-    elif len(sys.argv) == 3 and type(sys.argv[1]) == str or type(sys.argv[2]) == str:
+    elif len(sys.argv) == 3 and (not sys.argv[1].isdecimal() or not sys.argv[2].isdecimal()):
         print("InputError: only numbers")
         print(strHelp)
     else:
