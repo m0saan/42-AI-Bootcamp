@@ -80,8 +80,7 @@ class Vector:
         return self * other
 
 
-v1 = Vector([0.0, 1.0, 2.0, 3.0])
-v2 = v1 - 5
-v3 = 5 - v1
+v1 = Vector([2,3,5])
+v2 = Vector([3,3,5])
+v2 = v2 + v1
 print(v2)
-print(v3)

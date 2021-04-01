@@ -1,6 +1,14 @@
 from module01.ex02.vector import Vector
 
 
+def get_row(A, i: int) -> list:
+    """Returns the i-th row of A (as a Vector)"""
+    return A[i]
+
+def get_column(A, j: int) -> list:
+    """Returns the j-th column of A (as a Vector)"""
+    return [A_i[j] for A_i in A]
+
 class Matrix:
     """ This is the class representation of a Matrix which is a two-dimensional collection of numbers."""
 
@@ -45,7 +53,12 @@ class Matrix:
         """ Defining the addition between a matrix and a scalar. <scalar + matrix>"""
         matrix = []
         if isinstance(other, Matrix):
-            return self.dot(self, other)
+            if self.shape[1] != other.shape[0].
+                raise ValueError("Cannot perform multiplication")
+            ans = []
+            for ls in self.data:
+                pass
+
         for ls in self.data:
             matrix.append(list(map(lambda item: item + other, ls)))
         return Matrix(matrix)
