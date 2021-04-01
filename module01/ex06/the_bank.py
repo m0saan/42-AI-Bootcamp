@@ -22,6 +22,7 @@ class Bank(object):
 
     def __init__(self):
         self.account = []
+        self.has_b_prefix = False
 
     def add(self, account):
         self.account.append(account)
@@ -45,8 +46,7 @@ class Bank(object):
                 return True
         return False
 
-    @staticmethod
-    def is_corrupted(account):
+    def is_corrupted(self, account):
         ok = False
         count = 0
         attributes = list(filter(lambda att: not att.startswith("__"), dir(account)))
@@ -54,6 +54,7 @@ class Bank(object):
             return True
         for attr in attributes:
             if attr[0] == "b":
+                self.has_b_prefix = True
                 return True
             if attr.startswith("zip") or attr.startswith("addr"):
                 ok = True
@@ -68,23 +69,42 @@ class Bank(object):
             @return         True if success, False if an error occurred
         """
         if self.is_corrupted(account):
-            print("YES")
+            attr_dict = {'addr': '', 'value': 0, 'zip': 0}
+            account_attrs = list(account.__dict__.keys())
+            account_attrs.sort()
+            for attr in attr_dict.keys():
+                if attr not in account_attrs:
+                    account.__setattr__(attr, attr_dict[attr])
+                    print(attr)
+            if self.has_b_prefix:
+                for i, attr in account.__dict__.keys():
+                    if attr[0] == "b":
+                        print(attr)
+                        # account.__delattr__(attr)
+                        # account.__setattr__()
+
         return False
 
 
 bank = Bank()
-account1 = Account(name="Mo", addr="1250 Dr lamaaziz El Attaouia Morocco", value=1000, zip=43150)
-account2 = Account(name="Paul", addr="1250 Dr Cal USA", value=3500, zip=40000)
-account3 = Account(name="Takashi", addr="1250 Dr Tokyo Japan", value=5000, zip=20000)
-account4 = Account(name="Takashi", addr="1250 Dr Tokyo Japan", value=5000, zip=20000)
+account1 = Account(name="Mo", baddr="1250 Dr lamaaziz El Attaouia Morocco", value=1000)
 
-bank.add(account1)
-bank.add(account2)
-bank.add(account3)
+print(bank.__dict__)
+print(account1.__dict__)
 
-account1.value = 1000
-account2.value = 3500
-account3.value = 5000
+bank.fix_account(account1)
 
-print(bank.transfer(account2, account1, 1500))
-print(bank.fix_account(account4))
+# account2 = Account(name="Paul", addr="1250 Dr Cal USA", value=3500, zip=40000)
+# account3 = Account(name="Takashi", addr="1250 Dr Tokyo Japan", value=5000, zip=20000)
+# account4 = Account(name="Takashi", addr="1250 Dr Tokyo Japan", value=5000, zip=20000)
+#
+# bank.add(account1)
+# bank.add(account2)
+# bank.add(account3)
+#
+# account1.value = 1000
+# account2.value = 3500
+# account3.value = 5000
+#
+# print(bank.transfer(account2, account1, 1500))
+# print(bank.fix_account(account4))

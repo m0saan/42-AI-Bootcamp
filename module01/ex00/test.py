@@ -1,7 +1,7 @@
 from book import Book
 from recipe import Recipe
 
-recipe1 = Recipe.zero()
+recipe1 = Recipe.init_obj()
 recipe2 = Recipe("Tacos", 2, 10, ["3ish, sos", "chicken meat"], "lunch", "Blah blah Hopiti hobla")
 recipe3 = Recipe("Tacoss", 2, 10, ["3ish, sos", "chicken meat"], "lunch", "Blah blah Hopiti hobla")
 recipe4 = Recipe("Pattess", 4, 10, ["les pattes"], "dessert", "dir les pattes a jemmi")
