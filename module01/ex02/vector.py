@@ -27,6 +27,9 @@ class Vector:
         if not v:
             raise ValueError("List cannot be empty.")
 
+    def get_size(self):
+        return self.__size
+
     def __str__(self):
         return f"(Vector {self.__values})"
 
@@ -34,6 +37,7 @@ class Vector:
         return '{self.__class__.__name__}(vales={self.values}, size={self.size})'.format(self=self)
 
     def __add__(self, other):
+
         values = []
         if isinstance(self, type(other)):
             values = list(map(add, self.__values, other.__values))
@@ -55,7 +59,13 @@ class Vector:
         return Vector(values)
 
     def __rsub__(self, other):
-        return self - other
+        values = []
+        if isinstance(self, type(other)):
+            return self - other
+        else:
+            for i, v in enumerate(self.__values):
+                values.append(other - v)
+        return Vector(values)
 
     def __mul__(self, other):
         values = []
@@ -68,3 +78,9 @@ class Vector:
 
     def __rmul__(self, other):
         return self * other
+
+
+v1 = Vector([2,3,5])
+v2 = Vector([3,3,5])
+v2 = v2 + v1
+print(v2)
