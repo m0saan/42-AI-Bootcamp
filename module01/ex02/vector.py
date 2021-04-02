@@ -40,6 +40,9 @@ class Vector:
 
         values = []
         if isinstance(self, type(other)):
+            if len(self.__values) != len(other.__values):
+                raise ValueError("ValueError: operands could not be broadcast together"
+                                 "with shapes ({},) ({},)".format(self.__size, other.__size))
             values = list(map(add, self.__values, other.__values))
         else:
             for i, v in enumerate(self.__values):
@@ -52,6 +55,9 @@ class Vector:
     def __sub__(self, other):
         values = []
         if isinstance(self, type(other)):
+            if len(self.__values) != len(other.__values):
+                raise ValueError("ValueError: operands could not be broadcast together"
+                                 "with shapes ({},) ({},)".format(self.__size, other.__size))
             values = list(map(sub, self.__values, other.__values))
         else:
             for i, v in enumerate(self.__values):
@@ -70,6 +76,9 @@ class Vector:
     def __mul__(self, other):
         values = []
         if isinstance(self, type(other)):
+            if len(self.__values) != len(other.__values):
+                raise ValueError("ValueError: operands could not be broadcast together"
+                                 "with shapes ({},) ({},)".format(self.__size, other.__size))
             s = 0
             for value1, value2 in zip(self.__values, other.values):
                 s += (value1 * value2)
@@ -81,9 +90,3 @@ class Vector:
 
     def __rmul__(self, other):
         return self * other
-
-
-v1 = Vector([2,3,5])
-v2 = Vector([3,3,5])
-v2 = v2 + v1
-print(v2)
