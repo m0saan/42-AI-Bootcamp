@@ -5,9 +5,11 @@ def get_row(A, i: int) -> list:
     """Returns the i-th row of A (as a Vector)"""
     return A[i]
 
+
 def get_column(A, j: int) -> list:
     """Returns the j-th column of A (as a Vector)"""
     return [A_i[j] for A_i in A]
+
 
 class Matrix:
     """ This is the class representation of a Matrix which is a two-dimensional collection of numbers."""
@@ -52,13 +54,6 @@ class Matrix:
     def __add__(self, other: int):
         """ Defining the addition between a matrix and a scalar. <scalar + matrix>"""
         matrix = []
-        if isinstance(other, Matrix):
-            if self.shape[1] != other.shape[0].
-                raise ValueError("Cannot perform multiplication")
-            ans = []
-            for ls in self.data:
-                pass
-
         for ls in self.data:
             matrix.append(list(map(lambda item: item + other, ls)))
         return Matrix(matrix)
@@ -85,8 +80,19 @@ class Matrix:
         """ Defining the multiplication between a matrix and a scalar. <matrix * scalar>"""
         matrix = []
 
-        if isinstance(other, Vector):
-            return self.dot(self, other)
+        if isinstance(other, Matrix):
+            if self.shape[1] != other.shape[0]:
+                raise ValueError("Cannot perform multiplication")
+            ans = [[0 for x in range(other.shape[1])] for y in range(self.shape[0])]
+            n_columns = 0
+            for i, ls in enumerate(self.data):
+                _sum = 0
+                for j, v in enumerate(ls):
+                    for k, l in enumerate(get_column(other.data, n_columns)):
+                        _sum += (self.data[i][k] + other.data[k][j])
+                    ans[i][j] = _sum
+            return Matrix(ans)
+
         for ls in self.data:
             matrix.append(list(map(lambda item: item * other, ls)))
         return Matrix(matrix)
@@ -110,9 +116,9 @@ class Matrix:
 
 
 m1 = Matrix([[4, 1], [6, 3], [2, 4]])
-v1 = Vector([2, 5])
+m2 = Matrix([[2, 5, 2, -5], [3, 5, -2, 4]])
 
-v_sum = m1 * v1
+v_sum = m1 * m2
 
 print(v_sum)
 
