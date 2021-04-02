@@ -70,7 +70,10 @@ class Vector:
     def __mul__(self, other):
         values = []
         if isinstance(self, type(other)):
-            values = list(map(mul, self.__values, other.__values))
+            s = 0
+            for value1, value2 in zip(self.__values, other.values):
+                s += (value1 * value2)
+                return s
         else:
             for i, v in enumerate(self.__values):
                 values.append(v * other)
