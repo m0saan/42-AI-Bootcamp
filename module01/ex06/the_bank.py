@@ -70,66 +70,38 @@ class Bank(object):
                 return True
         return False
 
-    def fix_account(self, account: Account) -> bool:
+    def fix_account(self, p) -> bool:
         """
             fix the corrupted account
             @account: int(id) or str(name) of the account
             @return         True if success, False if an error occurred
         """
-        if account.is_corrupted():
-            attr_dict = {'addr': '', 'value': 0, 'zip': 0}
-            account_attrs = list(account.__dict__.keys())
-            account_attrs.sort()
-            for attr in attr_dict.keys():
-                if attr not in account_attrs:
-                    account.__setattr__(attr, attr_dict[attr])
-                    print(attr)
-            if self.has_b_prefix:
-                for i, attr in account.__dict__.keys():
-                    if attr[0] == "b":
-                        print(attr)
-                        # account.__delattr__(attr)
-                        # account.__setattr__()
 
-        return False
+        account = self.get_account(p)
 
+        if isinstance(account, Account):
+            if account.is_corrupted():
+                attributes = list(account.__dict__.keys())
+                if 'name' not in attributes:
+                    account.__dict__.update({'name': p})
+                if 'value' not in attributes:
+                    account.__dict__.update({'value': 0})
+                if 'addr' not in attributes:
+                    account.__dict__.update({'zip': ''})
+                if 'addr' not in attributes:
+                    account.__dict__.update({'addr': ''})
 
-if __name__ == '__main__':
-    print("\n1- Initial tow Accounts 'abdlali' and 'salmi':")
-    abdlali = Account("abdelaali", addr="el kelaa des sraghna", value=100, test=10)
-    salmi = Account("salmi", addr="bengerir", value=0, test=10)
+                for attr in attributes:
+                    if attr.startswith('b'):
+                        tmp = attr
+                        while tmp.startswith('b'):
+                            tmp = tmp[1:]
+                        account.__dict__[tmp] = account.__dict__[attr]
+                        del account.__dict__[attr]
 
-    print("\n2- Check if any accounr is corrupted:")
-    print("\tabdlali : ", abdlali.is_corrupted())
-    print("\tsalmi   : ", salmi.is_corrupted())
+                if account.__dict__.__len__() % 2 == 0:
+                    return False
 
-    print("\n3- Adding the two accounts to the Bank:")
-    bank = Bank()
-    bank.add(abdlali)
-    bank.add(salmi)
-
-    print("\n4- Show the amount of the two accounts:")
-    print("\tabdlali : ", abdlali.value)
-    print("\tsalmi   : ", salmi.value)
-
-    print("\n5- Make a transfer with 10 from abdlali --> salmi:")
-    bank.transfer("abdelaali", "salmi", 10)
-
-    print("\n6- Show the amount of the two accounts again:")
-    print("\tabdlali : ", abdlali.value)
-    print("\tsalmi   : ", salmi.value)
-
-    print("\n7- Create a correpted account 'mohammed' and adding it to the Bank:")
-    mohammed = Account("mohammed")
-    bank.add(mohammed)
-
-    print("\n8- Check if 'mohammed' is a corrupted account:")
-    print("\tmohammed : ", mohammed.is_corrupted())
-
-    # print("\n9- Try to fixing it:")
-    # print("\tAttributes before fixing: ", mohammed.__dict__)
-    # bank.fix_account('mohammed')
-    # print("\tAttributes after fixing: ", mohammed.__dict__)
-#
-# print("\n10- Check if 'mohammed' is still corrupted:")
-# print("\tmohammed : ", mohammed.is_corrupted())
+            if account.is_corrupted():
+                return False
+            return True
