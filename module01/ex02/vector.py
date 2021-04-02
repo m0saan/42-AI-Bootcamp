@@ -90,3 +90,39 @@ class Vector:
 
     def __rmul__(self, other):
         return self * other
+
+    def __truediv__(self, other):
+        values = []
+        if isinstance(self, type(other)):
+            if len(self.__values) != len(other.__values):
+                raise ValueError("ValueError: operands could not be broadcast together"
+                                 "with shapes ({},) ({},)".format(self.__size, other.__size))
+            for value1, value2 in zip(self.__values, other.values):
+                if value2 == 0:
+                    raise RuntimeWarning("divide by zero encountered in true_divide")
+                values.append((value1 / value2))
+            return Vector(values)
+        else:
+            if other == 0:
+                raise ZeroDivisionError("divide by zero encountered in true_divide")
+            for i, v in enumerate(self.__values):
+                values.append(v / other)
+        return Vector(values)
+
+    def __rtruediv__(self, other):
+        values = []
+        if other == 0:
+            raise ZeroDivisionError("divide by zero encountered in true_divide")
+        for i, v in enumerate(self.__values):
+            if v == 0:
+                raise RuntimeWarning("divide by zero encountered in true_divide")
+            values.append(other / v)
+        return Vector(values)
+
+
+v1 = Vector([2, 3, 5])
+v2 = Vector([3, 3, 0])
+print(2 / v1)
+
+# array([[1.5, 1. , 1. ]])
+# array([[0.66666667, 1.        , 1.        ]])
