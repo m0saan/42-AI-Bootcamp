@@ -1,6 +1,5 @@
 from module01.ex02.vector import Vector
 
-
 def get_row(A, i: int) -> list:
     """Returns the i-th row of A (as a Vector)"""
     return A[i]
@@ -118,7 +117,9 @@ class Matrix:
 m1 = Matrix([[4, 1], [6, 3], [2, 4]])
 m2 = Matrix([[2, 5, 2, -5], [3, 5, -2, 4]])
 
-v_sum = m1 * m2
+
+
+v_sum = m1 * 5
 
 print(v_sum)
 
