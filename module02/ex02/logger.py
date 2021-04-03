@@ -1,6 +1,6 @@
+import functools
 import time
 from random import randint
-import logging
 import os
 
 
@@ -12,16 +12,16 @@ class log:
     def __call__(self, *args, **kwargs):
         start = time.time()  # start time
         call = self.func(*args, **kwargs)  # call func
-        func_name = self.func.__name__  # func name
+        func_name = function_name = ' '.join(word.capitalize() for word in self.func.__name__.split('_'))  # func name
         end = time.time()  # end time
-        message = "(cmaxime)Running: {}    [ exec-time = {} ms ]\n".format(func_name, (end - start))
+        running_time = end - start
+        message = f"""(cmaxime)Running: {func_name}{''.join(' ' for i in range(20 - len(func_name)))}[ exec-time = {running_time:.3f} {"ms" if running_time < 1 else "s "} ]\n"""
 
         cwd = os.getcwd()
         with open(f"{cwd}/machine.log", "a") as f:
             f.write(message)
 
         return call
-
 
 
 class CoffeeMachine:
@@ -66,5 +66,3 @@ if __name__ == "__main__":
         machine.make_coffee(machine)
     machine.make_coffee(machine)
     machine.add_water(machine, 70)
-
-
