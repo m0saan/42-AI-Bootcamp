@@ -9,16 +9,14 @@ class TinyStatistician:
     def __init__(self):
         pass
 
-    @staticmethod
-    def mean(x: list) -> Optional[float]:
+    def mean(self, x: list) -> Optional[float]:
         """Calculate the mean of a given list"""
 
         if x:
             return float(sum(x) / len(x))
         return None
 
-    @staticmethod
-    def median(x: list) -> Optional[float]:
+    def median(self, x: list) -> Optional[float]:
         """Calculate the median of a given list"""
 
         if x:
@@ -27,13 +25,21 @@ class TinyStatistician:
                 middle = len(x) // 2
                 m1 = x[middle]
                 m2 = x[middle - 1]
-                return float((m1+m2) / 2)
+                return float((m1 + m2) / 2)
             else:
                 return float(x[len(x) // 2])
         return None
 
-    def quartiles(x, percentile):
+    def quartiles(self, x: list, percentile):
 
-        # find median
+        median = self.median(x)
+
         # find median of lower half and upper half of the list
         # find median
+        print(((len(x) + 1) * (median / 100)) * percentile)
+
+
+t = TinyStatistician()
+A = [5, 7, 4, 4, 6, 2, 8]
+print(np.quantile(A, 0.7))
+t.quartiles(A, 0.7)
