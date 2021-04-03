@@ -18,14 +18,14 @@ import time
 import sys
 
 
-toolbar_width = 1000
+toolbar_width = 100
 
 # setup toolbar
 start = time.time()
 for i in range(toolbar_width+1):
     sys.stdout.write('\r')
     # the exact output you're looking for:
-    sys.stdout.write(f"ETA: 8.67s [%d%%] [%-{100}s] %d/%d  |  elapsed time %.2fs" %
+    sys.stdout.write(f"ETA: 8.67s [%d%%] [%-{20}s] %d/%d  |  elapsed time %.2fs" %
                      ((i / toolbar_width * 100), '='*i, i, toolbar_width, (time.time() - start)))
     sys.stdout.flush()
     time.sleep(0.25)
