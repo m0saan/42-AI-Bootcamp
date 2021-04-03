@@ -92,9 +92,15 @@ class Matrix:
                     ans[i][j] = _sum
             return Matrix(ans)
 
-        for ls in self.data:
-            matrix.append(list(map(lambda item: item * other, ls)))
-        return Matrix(matrix)
+        elif isinstance(other, Vector):
+            for ls in self.data:
+                matrix.append(list(map(lambda item: item * other, ls)))
+            return Matrix(matrix)
+
+        elif isinstance(other, list):
+            for ls in self.data:
+                matrix.append(list(map(lambda item: item * other, ls)))
+            return Matrix(matrix)
 
     def __rmul__(self, other):
         """ Defining the multiplication between a matrix and a scalar. <scalar * matrix>"""
@@ -121,7 +127,7 @@ m2 = Matrix([[2, 5, 2, -5], [3, 5, -2, 4]])
 
 v_sum = m1 * 5
 
-print(v_sum)
+#print(v_sum)
 
 # m2 = m1 + 2
 # m3 = m1 * 2
