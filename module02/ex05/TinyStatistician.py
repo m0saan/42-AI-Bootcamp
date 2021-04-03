@@ -10,36 +10,62 @@ class TinyStatistician:
         pass
 
     def mean(self, x: list) -> Optional[float]:
-        """Calculate the mean of a given list"""
+        """ Calculate the mean of a given list."""
 
         if x:
             return float(sum(x) / len(x))
         return None
 
-    def median(self, x: list) -> Optional[float]:
-        """Calculate the median of a given list"""
+    def _median_odd(self, x: list) -> float:
+        x.sort()
+        return float(x[len(x) // 2])
 
-        if x:
-            x.sort()
-            if len(x) % 2 == 0:
-                middle = len(x) // 2
-                m1 = x[middle]
-                m2 = x[middle - 1]
-                return float((m1 + m2) / 2)
-            else:
-                return float(x[len(x) // 2])
-        return None
+    def _median_even(self, x: list) -> float:
+        x.sort()
+        middle = len(x) // 2
+        m1 = x[middle]
+        m2 = x[middle - 1]
+        return float((m1 + m2) / 2)
+
+    def median(self, x: list) -> Optional[float]:
+        """ Calculate the median of a given list
+            - If len(x) is odd, the median is the middle element.
+            - If len(xs) is even, it's the average of the middle two elements.
+        """
+        if not x:
+            return None
+        return self._median_even(x) if len(x) % 2 == 0 else self._median_odd(x)
 
     def quartiles(self, x: list, percentile):
-
-        median = self.median(x)
-
-        # find median of lower half and upper half of the list
-        # find median
-        print(((len(x) + 1) * (median / 100)) * percentile)
+        """Returns the pth-percentile value in x"""
+        percentile /= 100
+        x.sort()
+        index = int(percentile * len(x))
+        return float(x[index])
 
 
 t = TinyStatistician()
 A = [5, 7, 4, 4, 6, 2, 8]
-print(np.quantile(A, 0.7))
-t.quartiles(A, 0.7)
+B = [5, 7, 4, 4, 6]
+
+a = [1, 42, 300, 10, 59]
+
+print(np.quantile(a, 0.70))
+print(t.quartiles(a, 70))
+print(t.quartiles_ab(a, 70))
+
+# print(np.quantile(A, .50))
+# print(t.quartiles(A, .50))
+#
+# print(np.quantile(B, .50))
+# print(t.quartiles(B, .50))
+#
+# print(np.quantile(A, .90))
+# print(t.quartiles(A, .90))
+# '# t.quartiles(A, 0.7)
+#
+#
+# 0 0 0 0 0
+#
+# 80
+#
