@@ -28,9 +28,11 @@ class CsvReader:
         if self.header:
             self.header_line = lines[0]
         for line in lines:
-            if len(line.split(self.sep)) != n_of_elements:
+            line = line[:len(line)-1]
+            split_line = line.split(self.sep)
+            if len(split_line) != n_of_elements:
                 return None
-            self.data.append(line)
+            self.data.append(split_line)
         self.print_data()
 
     def getheader(self):
