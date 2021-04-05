@@ -118,11 +118,3 @@ class Vector:
                 raise RuntimeWarning("divide by zero encountered in true_divide")
             values.append(other / v)
         return Vector(values)
-
-
-v1 = Vector([2, 3, 5])
-v2 = Vector([3, 3, 0])
-print(2 / v1)
-
-# array([[1.5, 1. , 1. ]])
-# array([[0.66666667, 1.        , 1.        ]])
