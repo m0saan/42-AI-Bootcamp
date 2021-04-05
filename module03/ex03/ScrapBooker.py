@@ -18,15 +18,32 @@ class ScrapBooker:
         array = array[p1:x, p2:y]
         return array
 
+    def thin(self, array: type(np.array), n: int, axis: int):
+        """ deletes every n-th pixel row along the specified axis. """
+        lst = []
+        if not axis:
+            for arr in array:
+                tmp = []
+                for i in range(0, len(arr), n):
+                    if i <= len(arr):
+                        tmp = np.delete(arr, i+n)
+                        arr = tmp
+                lst.append(arr)
+            return np.array(lst)
+        else:
+            print("YAy.")
+
 
 if __name__ == '__main__':
     sb = ScrapBooker()
     M = np.array([
-        [1, 2, 3, 4],
-        [1, 2, 3, 4],
-        [1, 2, 3, 4],
-        [1, 2, 3, 4],
-        [1, 2, 3, 4],
-        [1, 2, 3, 4]
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     ])
-    print(sb.crop(array=M, dimensions=(10, 3), position=(1, 1)))
+    # print(sb.crop(array=M, dimensions=(10, 3), position=(1, 1)))
+    print(sb.thin(M, 3, 0))
+
