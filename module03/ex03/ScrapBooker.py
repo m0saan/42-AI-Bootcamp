@@ -1,4 +1,5 @@
 import numpy as np
+from module03.ex01.ImageProcessor import ImageProcessor
 
 
 class ScrapBooker:
@@ -40,10 +41,24 @@ class ScrapBooker:
 
     def juxtapose(self, array, n, axis):
         """ juxtaposes n copies of the image along the specified axis (0 vertical, 1 horizontal). """
+        if not axis:
+            for i in range(0, n):
+                array = np.concatenate((array, array), axis=axis)
+            return array
+
+        else:
+            tmp = array
+            for i in range(0, n):
+                array = np.concatenate((array, tmp), axis=axis)
+            return array
 
 
 if __name__ == '__main__':
     sb = ScrapBooker()
+    ip = ImageProcessor()
+    arr = ip.load("image.png")
+    arr = sb.juxtapose(arr, 2, 1)
+    ip.display(arr)
     M = np.array([
         [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -53,8 +68,8 @@ if __name__ == '__main__':
         [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     ])
     # print(sb.crop(array=M, dimensions=(10, 3), position=(1, 1)))
-    print(sb.thin(M, 3, 0))
-    print("-----------------------------------------")
+    # print(sb.thin(M, 3, 0))
+    # print("-----------------------------------------")
 
     N = np.array([["AAAAAAAAAAAA"],
                   ["BBBBBBBBBBBB"],
@@ -69,4 +84,4 @@ if __name__ == '__main__':
                   ["KKKKKKKKKKKK"],
                   ["LLLLLLLLLLLL"]
                   ])
-    print(sb.thin(N, 4, 1))
+    # print(sb.thin(N, 4, 1))
