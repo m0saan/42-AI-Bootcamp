@@ -32,7 +32,7 @@ class ScrapBooker:
                 lst.append(arr)
             return np.array(lst)
         else:
-            for i in range(n - 1, array.shape[0], n-1):
+            for i in range(n - 1, array.shape[0], n - 1):
                 if i >= array.shape[0]:
                     break
                 array = np.delete(array, i, 0)
@@ -40,6 +40,7 @@ class ScrapBooker:
 
     def juxtapose(self, array, n, axis):
         """ juxtaposes n copies of the image along the specified axis (0 vertical, 1 horizontal). """
+
 
 if __name__ == '__main__':
     sb = ScrapBooker()
