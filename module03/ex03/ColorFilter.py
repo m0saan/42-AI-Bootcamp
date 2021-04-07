@@ -24,8 +24,8 @@ class ColorFilter:
         :return: np.array
         Takes a NumPy array of an image as an argument and returns an array with a blue filter.
         """
-        array[:, :, 0] = 0
-        array[:, :, 1] = 0
+        array[:, :, 2] = 255
+        # array[:, :, 1] = 0
         return array
 
     def to_green(self, array):
@@ -33,8 +33,8 @@ class ColorFilter:
         :return: np.array
         Takes a NumPy array of an image as an argument and returns an array with a green filter.
         """
-        array[:, :, 0] = 0
-        array[:, :, 2] = 0
+        array[:, :, 0] *= 0
+        array[:, :, 2] *= 0
         return array
 
     def to_red(self, array):
@@ -42,11 +42,11 @@ class ColorFilter:
         :return: np.array
         Takes a NumPy array of an image as an argument and returns an array with a red filter.
         """
-        array[:, :, 1] = 0
-        array[:, :, 2] = 0
-        return array
+        arr1 = self.to_blue(array)
+        arr2 = self.to_green(array)
+        return arr1 - arr2
 
-    def to_red(self, array):
+    def to_celluloid(self, array):
         """
         :return: np.array
         Takes a NumPy array of an image as an argument and returns an array with a red filter.
@@ -65,5 +65,5 @@ if __name__ == '__main__':
     # arr = cf.invert(arr)
     # print(arr)
 
-    arr = cf.to_(arr)
+    arr = cf.to_blue(arr)
     imp.display(arr)
