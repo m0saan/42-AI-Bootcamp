@@ -9,7 +9,8 @@ class ScrapBooker:
     def __init__(self):
         pass
 
-    def crop(self, array: type(np.array), dimensions: tuple, position=(0, 0)):
+    @staticmethod
+    def crop(array: type(np.array), dimensions: tuple, position=(0, 0)):
         """ Crops the image as a rectangle with the given dimensions. """
         if array.shape < dimensions:
             print("dimensions cannot be larger than the current image size.")
@@ -19,7 +20,8 @@ class ScrapBooker:
         array = array[p1:x, p2:y]
         return array
 
-    def thin(self, array: type(np.array), n: int, axis: int):
+    @staticmethod
+    def thin(array: type(np.array), n: int, axis: int):
         """ deletes every n-th pixel row along the specified axis. """
 
         lst = []
@@ -39,7 +41,8 @@ class ScrapBooker:
                 array = np.delete(array, i, 0)
             return array
 
-    def juxtapose(self, array, n, axis):
+    @staticmethod
+    def juxtapose(array, n, axis):
         """ juxtaposes n copies of the image along the specified axis (0 vertical, 1 horizontal). """
         if not axis:
             for i in range(0, n):
@@ -52,13 +55,19 @@ class ScrapBooker:
                 array = np.concatenate((array, tmp), axis=axis)
             return array
 
+    @staticmethod
+    def mosaic(array, dimensions):
+        """ makes a grid with multiple copies of the array."""
+
+        return np.array(np.tile(array, dimensions))
+
 
 if __name__ == '__main__':
-    sb = ScrapBooker()
-    ip = ImageProcessor()
-    arr = ip.load("image.png")
-    arr = sb.juxtapose(arr, 2, 1)
-    ip.display(arr)
+    # sb = ScrapBooker()
+    # ip = ImageProcessor()
+    # arr = ip.load("image.png")
+    # arr = sb.juxtapose(arr, 2, 1)
+    # ip.display(arr)
     M = np.array([
         [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -85,3 +94,9 @@ if __name__ == '__main__':
                   ["LLLLLLLLLLLL"]
                   ])
     # print(sb.thin(N, 4, 1))
+
+    L = M = np.array([[1, 2]])
+
+    if __name__ == '__main__':
+        sb = ScrapBooker()
+        print(sb.mosaic(L, (2, 2)))
