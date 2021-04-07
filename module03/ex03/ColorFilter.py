@@ -5,9 +5,13 @@ import numpy as np
 class ColorFilter:
     """ This is the class representation of ColorFilter class. """
 
-    def invert(self, array) -> type(np.array):
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def invert(array) -> type(np.array):
         """
-        :param array: 
+        :param array:
         :return np.array:
         Takes a NumPy array of an image as an argument and returns an array with inverted color."""
 
@@ -19,16 +23,18 @@ class ColorFilter:
         colors_arr = 255 - colors_arr
         return colors_arr
 
-    def to_blue(self, array):
+    @staticmethod
+    def to_blue(array):
         """
         :return: np.array
         Takes a NumPy array of an image as an argument and returns an array with a blue filter.
         """
-        array[:, :, 2] = 255
-        # array[:, :, 1] = 0
+        array[:, :, 0] = 0
+        array[:, :, 1] = 0
         return array
 
-    def to_green(self, array):
+    @staticmethod
+    def to_green(array):
         """
         :return: np.array
         Takes a NumPy array of an image as an argument and returns an array with a green filter.
@@ -37,16 +43,18 @@ class ColorFilter:
         array[:, :, 2] *= 0
         return array
 
-    def to_red(self, array):
+    @staticmethod
+    def to_red(array):
         """
         :return: np.array
         Takes a NumPy array of an image as an argument and returns an array with a red filter.
         """
-        arr1 = self.to_blue(array)
-        arr2 = self.to_green(array)
-        return arr1 - arr2
+        array[:, :, 1] = 0
+        array[:, :, 2] = 0
+        return array
 
-    def to_celluloid(self, array):
+    @staticmethod
+    def to_celluloid(array):
         """
         :return: np.array
         Takes a NumPy array of an image as an argument and returns an array with a red filter.
@@ -59,11 +67,11 @@ class ColorFilter:
 
 if __name__ == '__main__':
     imp = ImageProcessor()
-    arr = imp.load("42AI.png")
+    arr = imp.load("image.png")
     # print(arr)
     cf = ColorFilter()
     # arr = cf.invert(arr)
     # print(arr)
 
-    arr = cf.to_blue(arr)
+    cf.to_red(arr)
     imp.display(arr)
