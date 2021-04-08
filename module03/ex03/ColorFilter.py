@@ -1,4 +1,5 @@
-from module03.ex01.ImageProcessor import ImageProcessor
+# from module03.ex01.ImageProcessor import ImageProcessor
+from ImageProcessor import ImageProcessor
 import numpy as np
 
 
@@ -9,7 +10,7 @@ class ColorFilter:
         pass
 
     @staticmethod
-    def invert(array) -> type(np.array):
+    def invert(array):
         """
         :param array:
         :return np.array:
@@ -17,11 +18,10 @@ class ColorFilter:
 
         """ Mathematically, to invert the color of one pixel,
         we subtract the pixel's color values from the maximum, 255."""
-        colors_arr = array[:, :, :3]  # we have an extra alpha channel that we don't want to modify, or the
+        # colors_arr = array[:, :, :3]  # we have an extra alpha channel that we don't want to modify, or the
         # transparent parts of the image won't be transparent anymore.
         # We can use numpy slice notation to modify all dimensions of the array.
-        colors_arr = 255 - colors_arr
-        return colors_arr
+        return 255 - array[:, :, :3]
 
     @staticmethod
     def to_blue(array):
@@ -59,19 +59,27 @@ class ColorFilter:
         :return: np.array
         Takes a NumPy array of an image as an argument and returns an array with a red filter.
         """
-        array[:, :, 0] = 81
-        array[:, :, 1] = 81
-        array[:, :, 2] = 83
+
+        # img[img[:, :, 0] < 255, 0] = 255
+        array[array < 64] = 0
+        array[(array > 64) & (array < 128)] = 64
+        array[array > 128] = 128
+
         return array
+
+    @staticmethod
+    def to_grayscale(array, _filter):
+        """Takes a NumPy array of an image as an argument and returns an array in grayscale."""
+
+        if _filter == "m" or _filter == "mean":
+            array = np.sum(array, axis=0)
+            return array
 
 
 if __name__ == '__main__':
     imp = ImageProcessor()
-    arr = imp.load("image.png")
-    # print(arr)
+    arr = imp.load("Elon.png")
     cf = ColorFilter()
-    # arr = cf.invert(arr)
-    # print(arr)
 
-    cf.to_red(arr)
+    arr = cf.to_grayscale(arr, "m")
     imp.display(arr)
