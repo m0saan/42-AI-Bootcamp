@@ -74,6 +74,8 @@ class ColorFilter:
         if _filter == "m" or _filter == "mean":
             array = np.sum(array, axis=0)
             return array
+        elif _filter == "weighted" or _filter == "w":
+            pass
 
 
 if __name__ == '__main__':
