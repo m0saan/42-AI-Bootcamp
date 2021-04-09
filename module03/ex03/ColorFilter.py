@@ -72,10 +72,13 @@ class ColorFilter:
         """Takes a NumPy array of an image as an argument and returns an array in grayscale."""
 
         if _filter == "m" or _filter == "mean":
-            array = np.sum(array, axis=0)
+            array[:, :, 0:3] = np.sum(array[:, :, 0:3] / 3, axis=2, keepdims=True).astype(array.dtype)
             return array
         elif _filter == "weighted" or _filter == "w":
-            pass
+            # 0.299 * R_channel + 0.587 * G_channel + 0.114 * B_channel.
+            array[:, :, 0:3] = np.sum([array[:, :, 0:1] * 0.299, 0.587 * array[:, :, 1:2], 0.114 * array[:, :, 2:3]],
+                                      axis=0)
+            return array
 
 
 if __name__ == '__main__':
@@ -83,5 +86,5 @@ if __name__ == '__main__':
     arr = imp.load("Elon.png")
     cf = ColorFilter()
 
-    arr = cf.to_grayscale(arr, "m")
+    arr = cf.to_grayscale(arr, "w")
     imp.display(arr)
